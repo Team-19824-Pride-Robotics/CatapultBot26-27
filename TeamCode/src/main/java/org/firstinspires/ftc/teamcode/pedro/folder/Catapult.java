@@ -11,10 +11,10 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 /// adds interpolation table; needs tuning
 /// we're just so gracious and professional
-@TeleOp(name="BioBuzz_i1")
+@TeleOp(name="Catapult")
 @Config
 
-public class BioBuzz_i1 extends LinearOpMode {
+public class Catapult extends LinearOpMode {
 
     private DcMotorEx FL;
     private DcMotorEx FR;
