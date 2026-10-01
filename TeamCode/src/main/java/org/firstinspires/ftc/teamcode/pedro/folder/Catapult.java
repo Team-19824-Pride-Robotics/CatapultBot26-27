@@ -36,6 +36,10 @@ public class Catapult extends LinearOpMode {
 
     public int downPosition = -90;
 
+    public int fullMotorRotation = 5281;
+
+    public boolean isFiring = false;
+
 
 
     @Override
@@ -133,25 +137,37 @@ public class Catapult extends LinearOpMode {
                 intake.setPower(0);
             }
 
-            if (gamepad2.right_trigger > 0.3) {
-                launchMotor1.setTargetPosition(upPosition);
-                launchMotor2.setTargetPosition(upPosition);
-                launchMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                launchMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                launchMotor1.setPower(1.0);
-                launchMotor2.setPower(1.0);
 
-            } else if (gamepad2.left_trigger > 0.3) {
-                launchMotor1.setTargetPosition(downPosition);
-                launchMotor2.setTargetPosition(downPosition);
-                launchMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                launchMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                launchMotor1.setPower(1.0);
-                launchMotor2.setPower(1.0);
 
-            } else {
-                launchMotor1.setPower(0);
-                launchMotor2.setPower(0);
+
+
+            if (isFiring = false) {
+                if (gamepad2.right_trigger > 0.3) {
+
+
+                    int targetPosition1 = launchMotor1.getCurrentPosition() + fullMotorRotation;
+                    int targetPosition2 = launchMotor2.getCurrentPosition() + fullMotorRotation;
+                    launchMotor1.setTargetPosition(targetPosition1);
+                    launchMotor2.setTargetPosition(targetPosition2);
+                    launchMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    launchMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    launchMotor1.setPower(1.0);
+                    launchMotor2.setPower(1.0);
+
+                    isFiring = true;
+
+                } else {
+                    launchMotor1.setPower(0);
+                    launchMotor2.setPower(0);
+
+                }
+            }else {
+                if(!launchMotor1.isBusy()&&!launchMotor2.isBusy()) {
+                    launchMotor1.setPower(0);
+                    launchMotor2.setPower(0);
+
+                    isFiring = false;
+                }
             }
 
             telemetry.addData("FR Velocity", FR.getVelocity());
